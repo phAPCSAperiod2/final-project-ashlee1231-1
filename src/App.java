@@ -1,5 +1,41 @@
 public class App {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
+
+        //Create a book that you want to read
+        Book book1 = new Book("A Study in Drowning");
+
+        //Create a book that you already read
+        Book book2 = new Book("Blood Over Bright Haven", 5);
+
+        //Some other books to add to Shelf
+        Book book3 = new Book("Mistborn", 5.0);
+        Book book4 = new Book("The Will of the Many");
+        Book book5 = new Book("Project Hail Mary", 4);
+        Book book6 = new Book("The Secret History", 4);
+        Book book7 = new Book("Yumi and the Nightmare Painter", 4.5);
+        Book book8 = new Book("The Raven Scholar");
+        Book book9 = new Book("Sword of Kaigen");
+
+        //Testing toString methods
+        System.out.println(book1.toString());
+        System.out.println(book2.toString());
+
+        //update status of the want to read book, update rating
+        book1.setReadStatus(true);
+        if (book1.setRating(5)) {
+            System.out.println(book1.toString());
+        }
+        //Creating a Shelf
+    Shelf shelf = new Shelf();
+    shelf.addBook(book3);
+    shelf.addBook(book4);
+    shelf.addBook(book5);
+    shelf.addBook(book6);
+    shelf.addBook(book7);
+    shelf.addBook(book8);
+    shelf.addBook(book9);
+
+    shelf.print();
     }
+
 }

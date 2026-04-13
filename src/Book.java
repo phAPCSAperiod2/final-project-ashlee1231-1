@@ -16,16 +16,33 @@ public class Book {
         this.isRead = true;
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
+    public boolean setRating(double rating) {
+        if (rating > 0 && rating <= 5) {
+            this.rating = rating;
+            return true;
+        }
+        return false;
     }
 
     public void setReadStatus(boolean isRead) {
         this.isRead = isRead;
     }
 
+    public boolean getReadStatus() {
+        return isRead;
+    }
+
     public String getTitle(){
         return title;
+    }
+
+    public String toString() {
+        if (isRead == true) {
+            return title + ": " + rating;
+        }
+        else {
+            return title;
+        }
     }
 
 
