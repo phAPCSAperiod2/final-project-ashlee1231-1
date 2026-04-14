@@ -1,21 +1,41 @@
+/**
+ * Represents a book with a title, rating, and read status.
+ * Books can be created as either read or unread, and ratings can be set for
+ * read books.
+ */
 public class Book {
     private String title;
     private double rating;
     private boolean isRead;
 
-    //Create a book that wants to be read
+    /**
+     * Creates a new book that wants to be read (unread status).
+     *
+     * @param title the title of the book
+     */
     public Book(String title) {
         this.title = title;
         this.isRead = false;
     }
 
-    //Create a book that is already read
+    /**
+     * Creates a new book that is already read with a given rating.
+     *
+     * @param title  the title of the book
+     * @param rating the rating of the book (between 1 and 5)
+     */
     public Book(String title, double rating) {
         this.title = title;
         this.rating = rating;
         this.isRead = true;
     }
 
+    /**
+     * Sets the rating for this book if the rating is valid (between 1 and 5).
+     *
+     * @param rating the rating to set
+     * @return true if the rating was set successfully, false otherwise
+     */
     public boolean setRating(double rating) {
         if (rating > 0 && rating <= 5) {
             this.rating = rating;
@@ -24,26 +44,49 @@ public class Book {
         return false;
     }
 
+    /**
+     * Sets the read status of this book.
+     *
+     * @param isRead true if the book has been read, false otherwise
+     */
     public void setReadStatus(boolean isRead) {
         this.isRead = isRead;
     }
 
+    /**
+     * Gets the read status of this book.
+     *
+     * @return true if the book has been read, false otherwise
+     */
     public boolean getReadStatus() {
         return isRead;
     }
 
-    public String getTitle(){
+    /**
+     * Gets the title of this book.
+     *
+     * @return the title of the book
+     */
+    public String getTitle() {
         return title;
     }
 
+    public double getRating() {
+        return rating;
+    }
+
+    /**
+     * Returns a string representation of this book.
+     * If the book is read, includes the rating; otherwise, just the title.
+     *
+     * @return a string representation of the book
+     */
     public String toString() {
         if (isRead == true) {
             return title + ": " + rating;
-        }
-        else {
+        } else {
             return title;
         }
     }
-
 
 }
