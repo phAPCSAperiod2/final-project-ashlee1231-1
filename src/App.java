@@ -1,6 +1,10 @@
 /**
  * Main application class that demonstrates the Book and Shelf classes.
- * Creates sample books, manages a shelf, and prints the shelf contents.
+ * 
+ * This class serves as the entry point for the application. It creates
+ * sample Book objects, adds them to a Shelf, and demonstrates the functionality
+ * of updating book properties and moving books between reading lists.
+ * The application then displays the organized shelf contents.
  */
 public class App {
     /**

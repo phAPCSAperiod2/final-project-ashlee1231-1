@@ -1,7 +1,10 @@
 /**
  * Represents a book with a title, rating, and read status.
- * Books can be created as either read or unread, and ratings can be set for
- * read books.
+ * 
+ * This class encapsulates a single book with properties for its title,
+ * rating (1-5 scale), and whether it has been read. Books can be created
+ * as either read with a rating or unread without a rating. The class provides
+ * methods to update read status, set ratings, and retrieve book information.
  */
 public class Book {
     private String title;
@@ -67,10 +70,20 @@ public class Book {
      *
      * @return the title of the book
      */
+    /**
+     * Gets the title of this book.
+     *
+     * @return the title of the book
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Gets the rating of this book.
+     *
+     * @return the rating of the book (between 1 and 5), or 0 if not set
+     */
     public double getRating() {
         return rating;
     }

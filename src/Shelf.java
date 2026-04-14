@@ -2,8 +2,13 @@ import java.util.ArrayList;
 
 /**
  * Represents a bookshelf that organizes books into read books, want-to-read
- * books,
- * and a 2D array of favorite books.
+ * books, and a 2D array of favorite books.
+ * 
+ * This class manages a personal book collection with three organizational
+ * systems: a list of books already read, a list of books the user wants to read,
+ * and a 2D array (3x2) for displaying favorite books. It provides methods to
+ * add books, move books between lists, and display the shelf contents in
+ * a formatted manner.
  */
 public class Shelf {
     private ArrayList<Book> readBooks;
@@ -73,12 +78,21 @@ public class Shelf {
             }
         }
     }
-    //moves a book between the want to read shelf and read shelf, assumes the book was in the want to read shelf
+    /**
+     * Moves a book from the want-to-read list to the read list.
+     * Assumes the book is currently in the want-to-read shelf.
+     *
+     * @param book the book to move from want-to-read to read
+     */
     public void moveBook(Book book) {
             wantBooks.remove(book);
             readBooks.add(book);
     }
 
+    /**
+     * Prints all read books with their ratings in a comma-separated format.
+     * The last book is preceded by "and".
+     */
     public void printRatings() {
         for (int i = 0; i < readBooks.size(); i++) {
             if (i == readBooks.size() - 1) {
@@ -110,17 +124,18 @@ public class Shelf {
             }
             want = false;
         }
-
+        if (!read) {
+                    System.out.println("You have not added any read books to favorites.");
+                }
+        boolean message = false;
         for (int row = 0; row < list.length; row++) {
-            for (int col = 0; col < list[col].length; col++) {
+            for (int col = 0; col < list[row].length; col++) {
                 if (row == 1 && col == 0) {
                     System.out.println("Your Top Books You Want to Read:");
                 }
-                if (!read) {
-                    System.out.println("You have not added any read books to favorites.");
-                }
-                else if (!want) {
+                else if (!want && !message) {
                     System.out.println("You have not added any want to read books to favorites");
+                    message = true;
                 }
                 else if (list[row][col] == null) {
                     System.out.print(" ");
