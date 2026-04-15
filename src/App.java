@@ -1,6 +1,6 @@
 /**
  * Main application class that demonstrates the Book and Shelf classes.
- * 
+ *
  * This class serves as the entry point for the application. It creates
  * sample Book objects, adds them to a Shelf, and demonstrates the functionality
  * of updating book properties and moving books between reading lists.
@@ -41,6 +41,7 @@ public class App {
         }
         // Creating a Shelf
         Shelf shelf = new Shelf();
+        shelf.addBook(book2);
         shelf.addBook(book3);
         shelf.addBook(book4);
         shelf.addBook(book5);
@@ -58,6 +59,7 @@ public class App {
 
         shelf.print();
 
+        System.out.println("Printing ratings...");
         shelf.printRatings();
     }
 

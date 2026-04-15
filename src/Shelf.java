@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * Represents a bookshelf that organizes books into read books, want-to-read
  * books, and a 2D array of favorite books.
- * 
+ *
  * This class manages a personal book collection with three organizational
  * systems: a list of books already read, a list of books the user wants to read,
  * and a 2D array (3x2) for displaying favorite books. It provides methods to
@@ -96,7 +96,7 @@ public class Shelf {
     public void printRatings() {
         for (int i = 0; i < readBooks.size(); i++) {
             if (i == readBooks.size() - 1) {
-                System.out.println("and " + readBooks.get(i).getTitle() + readBooks.get(i).getRating());
+                System.out.println("and " + readBooks.get(i).getTitle() + " " + readBooks.get(i).getRating());
             } else {
                 System.out.print(readBooks.get(i).getTitle() + " " + readBooks.get(i).getRating() + ", ");
             }
@@ -130,15 +130,12 @@ public class Shelf {
         boolean message = false;
         for (int row = 0; row < list.length; row++) {
             for (int col = 0; col < list[row].length; col++) {
-                if (row == 1 && col == 0) {
-                    System.out.println("Your Top Books You Want to Read:");
-                }
-                else if (!want && !message) {
+                if (!want && !message) {
                     System.out.println("You have not added any want to read books to favorites");
                     message = true;
                 }
                 else if (list[row][col] == null) {
-                    System.out.print(" ");
+                    System.out.print("");
                 } else {
                     System.out.println(list[row][col].getTitle());
                 }
@@ -166,7 +163,6 @@ public class Shelf {
             printArrayList(wantBooks);
         }
 
-        System.out.println("Your Favorite Read Books:");
         print2D(topBooks);
 
     }
