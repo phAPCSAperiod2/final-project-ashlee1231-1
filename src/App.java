@@ -34,6 +34,8 @@ public class App {
         System.out.println(book1.toString());
         System.out.println(book2.toString());
 
+        System.out.println("");
+
         // update status of the want to read book, update rating
         book1.setReadStatus(true);
         if (book1.setRating(5)) {
@@ -50,17 +52,57 @@ public class App {
         shelf.addBook(book8);
         shelf.addBook(book9);
 
-        shelf.print();
-
-        //update the read status of a book
-        book4.setReadStatus(true);
-        book4.setRating(5);
-        shelf.moveBook(book4);
-
-        shelf.print();
+        System.out.println("");
 
         System.out.println("Printing ratings...");
         shelf.printRatings();
+        shelf.printAverages();
+    }
+    //1 is print
+    //2 add book (make object then call add method)
+    //3 update status
+    //4 add book to favorites (check to see if there's another item, if there is, add behind)
+    //5 print
+
+    public static void menu(int num, Shelf shelf) {
+        if (num == 1) {
+            shelf.print();
+        }
+        if (num == 2) {
+            makeBook(shelf);
+        }
+        if (num == 3) {
+            updateBook(shelf);
+        }
     }
 
+    public static void makeBook(Shelf shelf) {
+        int response = 0;
+        System.out.println("Are you..");
+        System.out.println("1) Adding a book you've read");
+        System.out.println("2) Adding a book you want to read?");
+        System.out.println("Enter the number:");
+        if (response == 1) {
+            double rating = 0;
+            String title = "";
+            Book newBook = new Book(title, rating);
+            shelf.addBook(newBook);
+        }
+        else {
+            String title = "";
+            Book newBook = new Book(title);
+            shelf.addBook(newBook);
+        }
+    }
+
+    public static void updateBook(Shelf shelf) {
+        System.out.println("Which book do you want to update?");
+        String titleName = "";
+        Book updateBook = shelf.findBook(titleName);
+        System.out.println("What are you going to rate this book?");
+        double rating = 0;
+        updateBook.setRating(rating);
+        shelf.moveBook(updateBook);
+
+    }
 }

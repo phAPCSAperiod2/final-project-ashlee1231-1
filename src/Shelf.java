@@ -81,6 +81,7 @@ public class Shelf {
     /**
      * Moves a book from the want-to-read list to the read list.
      * Assumes the book is currently in the want-to-read shelf.
+     * Assumes the read status was changed before method call.
      *
      * @param book the book to move from want-to-read to read
      */
@@ -167,4 +168,24 @@ public class Shelf {
 
     }
 
+    public void printAverages() {
+        double total = 0;
+        int count = 0;
+        for (int i = 0; i < readBooks.size(); i++) {
+            total += readBooks.get(i).getRating();
+            count++;
+        }
+        System.out.println("Your average rating is " + total/count + ".");
+    }
+
+    public Book findBook(String title) {
+        for (int i = 0; i < wantBooks.size(); i++) {
+            if (wantBooks.get(i).getTitle().equals(title)) {
+            return wantBooks.get(i);
+            }
+        }
+        return null;
+    }
+
 }
+

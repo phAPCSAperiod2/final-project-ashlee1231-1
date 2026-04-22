@@ -1,6 +1,6 @@
 /**
  * Represents a book with a title, rating, and read status.
- * 
+ *
  * This class encapsulates a single book with properties for its title,
  * rating (1-5 scale), and whether it has been read. Books can be created
  * as either read with a rating or unread without a rating. The class provides
@@ -40,6 +40,7 @@ public class Book {
      * @return true if the rating was set successfully, false otherwise
      */
     public boolean setRating(double rating) {
+        this.setReadStatus(true);
         if (rating > 0 && rating <= 5) {
             this.rating = rating;
             return true;
