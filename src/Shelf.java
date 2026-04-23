@@ -49,6 +49,29 @@ public class Shelf {
         topBooks[row][col] = book;
     }
 
+    public int findIndexOfNull(int num) {
+        int elseNum = -1;
+        for (int i = num; i < topBooks.length; i++) {
+            if (topBooks[num][i] == null) {
+                elseNum = i;
+            }
+        }
+        return elseNum;
+    }
+
+
+
+    //locates where the book is and returns the index
+    public int returnIndex(Book book, int row) {
+        int num = -1;
+        for (int i = row; i < topBooks.length; i++) {
+            if (topBooks[row][i].equals(book)) {
+                num = i;
+            }
+        }
+        return num;
+    }
+
     /**
      * Checks if an ArrayList is empty by checking if the first element is null.
      * Note: This method may not work correctly for ArrayLists that can contain null
@@ -103,6 +126,16 @@ public class Shelf {
             }
         }
     }
+
+    public boolean nullElementFound(int num) {
+        for (int i = 0; i < topBooks.length; i++) {
+            if (topBooks[num][i] == null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     /**
      * Prints the contents of a 2D array of books.
@@ -178,10 +211,22 @@ public class Shelf {
         System.out.println("Your average rating is " + total/count + ".");
     }
 
-    public Book findBook(String title) {
-        for (int i = 0; i < wantBooks.size(); i++) {
-            if (wantBooks.get(i).getTitle().equals(title)) {
-            return wantBooks.get(i);
+    //check if the book you want to find is in read or want to read shelf
+    public Book findBook(String title, int num) {
+        //loop for want book
+        if (num == 1) {
+            for (int i = 0; i < wantBooks.size(); i++) {
+                if (wantBooks.get(i).getTitle().equals(title)) {
+                    return wantBooks.get(i);
+                }
+            }
+        }
+        //loop for read book
+        else {
+            for (int i = 0; i < readBooks.size(); i++) {
+                if (readBooks.get(i).getTitle().equals(title)) {
+                    return readBooks.get(i);
+                }
             }
         }
         return null;

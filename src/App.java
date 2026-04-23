@@ -57,13 +57,15 @@ public class App {
         System.out.println("Printing ratings...");
         shelf.printRatings();
         shelf.printAverages();
+
+        menu(1, shelf);
+        menu(2, shelf);
     }
     //1 is print
     //2 add book (make object then call add method)
     //3 update status
     //4 add book to favorites (check to see if there's another item, if there is, add behind)
-    //5 print
-
+    //5 get averages
     public static void menu(int num, Shelf shelf) {
         if (num == 1) {
             shelf.print();
@@ -74,6 +76,15 @@ public class App {
         if (num == 3) {
             updateBook(shelf);
         }
+        if (num == 4) {
+            addToFavies(shelf);
+        }
+        if (num == 5) {
+            averages(shelf);
+        }
+        else {
+            System.out.println("Not a valid input. Try again");
+        }
     }
 
     public static void makeBook(Shelf shelf) {
@@ -83,12 +94,14 @@ public class App {
         System.out.println("2) Adding a book you want to read?");
         System.out.println("Enter the number:");
         if (response == 1) {
+            System.out.println("Adding a book you've read...");
             double rating = 0;
             String title = "";
             Book newBook = new Book(title, rating);
             shelf.addBook(newBook);
         }
         else {
+            System.out.println("Adding a book you want to read...");
             String title = "";
             Book newBook = new Book(title);
             shelf.addBook(newBook);
@@ -98,11 +111,48 @@ public class App {
     public static void updateBook(Shelf shelf) {
         System.out.println("Which book do you want to update?");
         String titleName = "";
-        Book updateBook = shelf.findBook(titleName);
+        Book updateBook = shelf.findBook(titleName, 1);
         System.out.println("What are you going to rate this book?");
         double rating = 0;
         updateBook.setRating(rating);
         shelf.moveBook(updateBook);
 
     }
-}
+
+    public static void addToFavies(Shelf shelf) {
+        int index = -1;
+        int response = 0;
+        System.out.println("Are you adding a favorite too...");
+        System.out.println("0) Adding a read book to favorites");
+        System.out.println("1) Adding an unread book to top priority");
+        System.out.println("What book do you want to add?");
+            String titleOfBook = "";
+            Book book = shelf.findBook(titleOfBook, response);
+            //if there is a null element, add to the first instance of a null.
+            if (shelf.nullElementFound(response)) {
+                index = shelf.findIndexOfNull(response);
+                shelf.addToFavorites(response, index, book);
+            }
+            //if there are three items, choose one index to replace
+            else {
+                int secRes = 0;
+                System.out.println("Uh oh! You already have 3 books in favorites...");
+                System.out.println("Which do you want to replace?");
+                System.out.println("0) Existing Book");
+                System.out.println("1) Nevermind");
+                if (secRes == 0) {
+                    System.out.println("Which book do you want to remove?");
+                    String titleOfRev = "";
+                    Book bookToRemove = shelf.findBook(titleOfRev, response);
+                    index = shelf.returnIndex(bookToRemove, response);
+                    shelf.addToFavorites(response, index, book);
+                    System.out.println("Successfully added the book!");
+                }
+            }
+        }
+
+    public static void averages(Shelf shelf) {
+            System.out.println("This is your average rating of all books you have read!");
+            shelf.printAverages();
+        }
+    }
