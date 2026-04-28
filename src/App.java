@@ -61,11 +61,13 @@ public class App {
         menu(1, shelf);
         menu(2, shelf);
     }
-    //1 is print
-    //2 add book (make object then call add method)
-    //3 update status
-    //4 add book to favorites (check to see if there's another item, if there is, add behind)
-    //5 get averages
+
+    /**
+     * Processes a menu selection and performs the matching shelf action.
+     *
+     * @param num   the menu option number selected by the user
+     * @param shelf the shelf to operate on
+     */
     public static void menu(int num, Shelf shelf) {
         if (num == 1) {
             shelf.print();
@@ -81,12 +83,16 @@ public class App {
         }
         if (num == 5) {
             averages(shelf);
-        }
-        else {
+        } else {
             System.out.println("Not a valid input. Try again");
         }
     }
 
+    /**
+     * Prompts for book information and adds a new book to the shelf.
+     *
+     * @param shelf the shelf to add the new book to
+     */
     public static void makeBook(Shelf shelf) {
         int response = 0;
         System.out.println("Are you..");
@@ -99,8 +105,7 @@ public class App {
             String title = "";
             Book newBook = new Book(title, rating);
             shelf.addBook(newBook);
-        }
-        else {
+        } else {
             System.out.println("Adding a book you want to read...");
             String title = "";
             Book newBook = new Book(title);
@@ -108,6 +113,11 @@ public class App {
         }
     }
 
+    /**
+     * Updates the rating and reading status for an existing book on the shelf.
+     *
+     * @param shelf the shelf containing the book to update
+     */
     public static void updateBook(Shelf shelf) {
         System.out.println("Which book do you want to update?");
         String titleName = "";
@@ -119,6 +129,11 @@ public class App {
 
     }
 
+    /**
+     * Adds a selected book to the favorites section of the shelf.
+     *
+     * @param shelf the shelf containing the book to add to favorites
+     */
     public static void addToFavies(Shelf shelf) {
         int index = -1;
         int response = 0;
@@ -126,33 +141,38 @@ public class App {
         System.out.println("0) Adding a read book to favorites");
         System.out.println("1) Adding an unread book to top priority");
         System.out.println("What book do you want to add?");
-            String titleOfBook = "";
-            Book book = shelf.findBook(titleOfBook, response);
-            //if there is a null element, add to the first instance of a null.
-            if (shelf.nullElementFound(response)) {
-                index = shelf.findIndexOfNull(response);
-                shelf.addToFavorites(response, index, book);
-            }
-            //if there are three items, choose one index to replace
-            else {
-                int secRes = 0;
-                System.out.println("Uh oh! You already have 3 books in favorites...");
-                System.out.println("Which do you want to replace?");
-                System.out.println("0) Existing Book");
-                System.out.println("1) Nevermind");
-                if (secRes == 0) {
-                    System.out.println("Which book do you want to remove?");
-                    String titleOfRev = "";
-                    Book bookToRemove = shelf.findBook(titleOfRev, response);
-                    index = shelf.returnIndex(bookToRemove, response);
-                    shelf.addToFavorites(response, index, book);
-                    System.out.println("Successfully added the book!");
-                }
-            }
+        String titleOfBook = "";
+        Book book = shelf.findBook(titleOfBook, response);
+        // if there is a null element, add to the first instance of a null.
+        if (shelf.nullElementFound(response)) {
+            index = shelf.findIndexOfNull(response);
+            shelf.addToFavorites(response, index, book);
         }
-
-    public static void averages(Shelf shelf) {
-            System.out.println("This is your average rating of all books you have read!");
-            shelf.printAverages();
+        // if there are three items, choose one index to replace
+        else {
+            int secRes = 0;
+            System.out.println("Uh oh! You already have 3 books in favorites...");
+            System.out.println("Which do you want to replace?");
+            System.out.println("0) Existing Book");
+            System.out.println("1) Nevermind");
+            if (secRes == 0) {
+                System.out.println("Which book do you want to remove?");
+                String titleOfRev = "";
+                Book bookToRemove = shelf.findBook(titleOfRev, response);
+                index = shelf.returnIndex(bookToRemove, response);
+                shelf.addToFavorites(response, index, book);
+                System.out.println("Successfully added the book!");
+            }
         }
     }
+
+    /**
+     * Displays the average rating for all books marked as read on the shelf.
+     *
+     * @param shelf the shelf whose average rating should be printed
+     */
+    public static void averages(Shelf shelf) {
+        System.out.println("This is your average rating of all books you have read!");
+        shelf.printAverages();
+    }
+}

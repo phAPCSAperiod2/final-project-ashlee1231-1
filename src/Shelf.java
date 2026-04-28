@@ -6,7 +6,7 @@ import java.util.ArrayList;
  *
  * This class manages a personal book collection with three organizational
  * systems: a list of books already read, a list of books the user wants to read,
- * and a 2D array (3x2) for displaying favorite books. It provides methods to
+ * and a 2D favorites array (2 rows by 3 columns). It provides methods to
  * add books, move books between lists, and display the shelf contents in
  * a formatted manner.
  */
@@ -41,14 +41,20 @@ public class Shelf {
     /**
      * Adds a book to the favorites array at the specified position.
      *
-     * @param row  the row index (0-2)
-     * @param col  the column index (0-1)
+     * @param row  the row index (0-1)
+     * @param col  the column index (0-2)
      * @param book the book to add to favorites
      */
     public void addToFavorites(int row, int col, Book book) {
         topBooks[row][col] = book;
     }
 
+    /**
+     * Finds the first empty position in the specified favorites row.
+     *
+     * @param num the favorites row to search
+     * @return the first column index with a null entry, or -1 if none is found
+     */
     public int findIndexOfNull(int num) {
         int elseNum = -1;
         for (int i = num; i < topBooks.length; i++) {
@@ -59,9 +65,13 @@ public class Shelf {
         return elseNum;
     }
 
-
-
-    //locates where the book is and returns the index
+    /**
+     * Finds the column index of a book in the specified favorites row.
+     *
+     * @param book the book to locate
+     * @param row the favorites row to search
+     * @return the column index of the book, or -1 if not found
+     */
     public int returnIndex(Book book, int row) {
         int num = -1;
         for (int i = row; i < topBooks.length; i++) {
@@ -127,6 +137,12 @@ public class Shelf {
         }
     }
 
+    /**
+     * Checks whether the specified favorites row contains any empty slots.
+     *
+     * @param num the favorites row to check
+     * @return true if the row contains no null entries, false otherwise
+     */
     public boolean nullElementFound(int num) {
         for (int i = 0; i < topBooks.length; i++) {
             if (topBooks[num][i] == null) {
@@ -135,7 +151,6 @@ public class Shelf {
         }
         return true;
     }
-
 
     /**
      * Prints the contents of a 2D array of books.
@@ -201,6 +216,9 @@ public class Shelf {
 
     }
 
+    /**
+     * Prints the average rating for all books in the read-books list.
+     */
     public void printAverages() {
         double total = 0;
         int count = 0;
@@ -211,7 +229,13 @@ public class Shelf {
         System.out.println("Your average rating is " + total/count + ".");
     }
 
-    //check if the book you want to find is in read or want to read shelf
+    /**
+     * Finds a book by title in either the want-to-read or read list.
+     *
+     * @param title the title of the book to find
+     * @param num 1 to search want-to-read books, otherwise searches read books
+     * @return the matching Book if found, or null if no match exists
+     */
     public Book findBook(String title, int num) {
         //loop for want book
         if (num == 1) {

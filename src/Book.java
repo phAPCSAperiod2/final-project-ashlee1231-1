@@ -71,11 +71,6 @@ public class Book {
      *
      * @return the title of the book
      */
-    /**
-     * Gets the title of this book.
-     *
-     * @return the title of the book
-     */
     public String getTitle() {
         return title;
     }
