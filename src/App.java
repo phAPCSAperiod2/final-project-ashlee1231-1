@@ -1,3 +1,4 @@
+import java.util.Scanner;
 /**
  * Main application class that demonstrates the Book and Shelf classes.
  *
@@ -14,52 +15,36 @@ public class App {
      * @throws Exception if an error occurs
      */
     public static void main(String[] args) throws Exception {
-
-        // Create a book that you want to read
-        Book book1 = new Book("A Study in Drowning");
-
-        // Create a book that you already read
-        Book book2 = new Book("Blood Over Bright Haven", 5);
-
-        // Some other books to add to Shelf
-        Book book3 = new Book("Mistborn", 5.0);
-        Book book4 = new Book("The Will of the Many");
-        Book book5 = new Book("Project Hail Mary", 4);
-        Book book6 = new Book("The Secret History", 4);
-        Book book7 = new Book("Yumi and the Nightmare Painter", 4.5);
-        Book book8 = new Book("The Raven Scholar");
-        Book book9 = new Book("Sword of Kaigen");
-
-        // Testing toString methods
-        System.out.println(book1.toString());
-        System.out.println(book2.toString());
-
-        System.out.println("");
-
-        // update status of the want to read book, update rating
-        book1.setReadStatus(true);
-        if (book1.setRating(5)) {
-            System.out.println(book1.toString());
-        }
-        // Creating a Shelf
+        String userContinue = "Yes";
         Shelf shelf = new Shelf();
-        shelf.addBook(book2);
-        shelf.addBook(book3);
-        shelf.addBook(book4);
-        shelf.addBook(book5);
-        shelf.addBook(book6);
-        shelf.addBook(book7);
-        shelf.addBook(book8);
-        shelf.addBook(book9);
+        Scanner scan = new Scanner(System.in);
+        while (userContinue.equalsIgnoreCase("Yes")) {
+            System.out.println("Welcome to Your Shelf!");
+            printMenu();
 
-        System.out.println("");
+            //user input
+            int userInput = scan.nextInt();
+            scan.nextLine();
+            //put a try else here
+            goMenu(userInput, shelf);
 
-        System.out.println("Printing ratings...");
-        shelf.printRatings();
-        shelf.printAverages();
+            //end of method
+            System.out.println("Continue using shelf? Type yes if so!");
+            userContinue = scan.nextLine();
 
-        menu(1, shelf);
-        menu(2, shelf);
+        }
+
+        scan.close();
+
+    }
+
+    public static void printMenu() {
+        System.out.println("Please choose from the following options...");
+        System.out.println("1) Print Shelf");
+        System.out.println("2) Make a Book");
+        System.out.println("3) Update a Book as Read");
+        System.out.println("4) Add a Book to Favorites");
+        System.out.println("5) Find Book Rating Averages");
     }
 
     /**
@@ -68,22 +53,23 @@ public class App {
      * @param num   the menu option number selected by the user
      * @param shelf the shelf to operate on
      */
-    public static void menu(int num, Shelf shelf) {
+    public static void goMenu(int num, Shelf shelf) {
         if (num == 1) {
             shelf.print();
         }
-        if (num == 2) {
+        else if (num == 2) {
             makeBook(shelf);
         }
-        if (num == 3) {
+        else if (num == 3) {
             updateBook(shelf);
         }
-        if (num == 4) {
+        else if (num == 4) {
             addToFavies(shelf);
         }
-        if (num == 5) {
+        else if (num == 5) {
             averages(shelf);
-        } else {
+        }
+        else {
             System.out.println("Not a valid input. Try again");
         }
     }
@@ -94,22 +80,30 @@ public class App {
      * @param shelf the shelf to add the new book to
      */
     public static void makeBook(Shelf shelf) {
+        Scanner scan = new Scanner(System.in);
         int response = 0;
         System.out.println("Are you..");
         System.out.println("1) Adding a book you've read");
         System.out.println("2) Adding a book you want to read?");
         System.out.println("Enter the number:");
+        response = scan.nextInt();
+        scan.nextLine();
         if (response == 1) {
             System.out.println("Adding a book you've read...");
-            double rating = 0;
-            String title = "";
+            System.out.println("What is the name of the book?");
+            String title = scan.nextLine();
+            System.out.println("What do you rate it? (Counts decimals):");
+            double rating = scan.nextDouble();
             Book newBook = new Book(title, rating);
             shelf.addBook(newBook);
+            System.out.println("You have added the book " + newBook.toString() + " to your read books!");
         } else {
             System.out.println("Adding a book you want to read...");
-            String title = "";
+            System.out.println("What is the name of the book?");
+            String title = scan.nextLine();
             Book newBook = new Book(title);
             shelf.addBook(newBook);
+            System.out.println("You have added the book " + newBook.toString() + " to your want to read books!");
         }
     }
 
@@ -119,11 +113,13 @@ public class App {
      * @param shelf the shelf containing the book to update
      */
     public static void updateBook(Shelf shelf) {
+        Scanner scan = new Scanner(System.in);
         System.out.println("Which book do you want to update?");
-        String titleName = "";
+        String titleName = scan.nextLine();
         Book updateBook = shelf.findBook(titleName, 1);
         System.out.println("What are you going to rate this book?");
-        double rating = 0;
+        double rating = scan.nextDouble();
+        scan.nextLine();
         updateBook.setRating(rating);
         shelf.moveBook(updateBook);
 
@@ -135,13 +131,15 @@ public class App {
      * @param shelf the shelf containing the book to add to favorites
      */
     public static void addToFavies(Shelf shelf) {
+        Scanner scan = new Scanner(System.in);
         int index = -1;
-        int response = 0;
         System.out.println("Are you adding a favorite too...");
         System.out.println("0) Adding a read book to favorites");
         System.out.println("1) Adding an unread book to top priority");
+        int response = scan.nextInt();
+        scan.nextLine();
         System.out.println("What book do you want to add?");
-        String titleOfBook = "";
+        String titleOfBook = scan.nextLine();
         Book book = shelf.findBook(titleOfBook, response);
         // if there is a null element, add to the first instance of a null.
         if (shelf.nullElementFound(response)) {
@@ -155,9 +153,11 @@ public class App {
             System.out.println("Which do you want to replace?");
             System.out.println("0) Existing Book");
             System.out.println("1) Nevermind");
+            secRes = scan.nextInt();
+            scan.nextLine();
             if (secRes == 0) {
                 System.out.println("Which book do you want to remove?");
-                String titleOfRev = "";
+                String titleOfRev = scan.nextLine();
                 Book bookToRemove = shelf.findBook(titleOfRev, response);
                 index = shelf.returnIndex(bookToRemove, response);
                 shelf.addToFavorites(response, index, book);

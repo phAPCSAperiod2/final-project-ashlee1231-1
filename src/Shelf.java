@@ -103,13 +103,20 @@ public class Shelf {
      * @param list the ArrayList of books to print
      */
     public static void printArrayList(ArrayList<Book> list) {
+        boolean oneBook = false;
+        if (list.size() == 1) {
+            System.out.println(list.get(0).toString());
+            oneBook = true;
+        }
+        if (!oneBook) {
         for (int i = 0; i < list.size(); i++) {
             if (i == list.size() - 1) {
-                System.out.println("and " + list.get(i).getTitle());
+                System.out.println("and " + list.get(i).toString());
             } else {
-                System.out.print(list.get(i).getTitle() + ", ");
+                System.out.print(list.get(i).toString() + ", ");
             }
         }
+    }
     }
     /**
      * Moves a book from the want-to-read list to the read list.
@@ -167,7 +174,7 @@ public class Shelf {
             }
             read = false;
         }
-        for (int i = 0; i <= 2; i++) {
+        for (int i = 0; i < 2; i++) {
             if (list[1][i] != null) {
                 break;
             }
