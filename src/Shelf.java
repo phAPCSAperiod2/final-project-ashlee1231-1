@@ -56,14 +56,12 @@ public class Shelf {
      * @return the first column index with a null entry, or -1 if none is found
      */
     public int findIndexOfNull(int num) {
-        int elseNum = -1;
-        for (int i = 0; i < topBooks.length; i++) {
+        for (int i = 0; i < topBooks[num].length; i++) {
             if (topBooks[num][i] == null) {
-                elseNum = i;
+                return i;
             }
         }
-        System.out.println("The index where there is a null element is " + elseNum);
-        return elseNum;
+        return -1;
     }
 
     /**
@@ -75,7 +73,7 @@ public class Shelf {
      */
     public int returnIndex(Book book, int row) {
         int num = -1;
-        for (int i = row; i < topBooks.length; i++) {
+        for (int i = 0; i < topBooks[0].length; i++) {
             if (topBooks[row][i].equals(book)) {
                 num = i;
             }

@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 /**
  * Main application class that demonstrates the Book and Shelf classes.
@@ -15,6 +16,7 @@ public class App {
      * @throws Exception if an error occurs
      */
     public static void main(String[] args) throws Exception {
+        int userInput = -1;
         String userContinue = "Yes";
         Shelf shelf = new Shelf();
         Scanner scan = new Scanner(System.in);
@@ -22,21 +24,36 @@ public class App {
             System.out.println("Welcome to Your Shelf!");
             printMenu();
 
-            //user input
-            int userInput = scan.nextInt();
-            scan.nextLine();
-            //put a try else here
+            boolean validInput = false;
+            do {
+                try {
+                    System.out.println("Enter a number: ");
+                    userInput = scan.nextInt();
+                    scan.nextLine();
+                    validInput = true;
+                }
+                catch (InputMismatchException e ) {
+                System.out.println("Invalid input. Please enter a number.");
+                scan.nextLine();
+                }
+            } while (!validInput);
+
+
             goMenu(userInput, shelf);
 
             //end of method
             System.out.println("Continue using shelf? Type yes if so!");
-            userContinue = scan.nextLine();
+            try {
+                userContinue = scan.nextLine();
+            }
+            catch (InputMismatchException f ) {
+                System.out.println("Sorry, that is not a valid input. Please type the phrase");
+            }
 
         }
-
         scan.close();
+            }
 
-    }
 
     public static void printMenu() {
         System.out.println("Please choose from the following options...");
@@ -86,21 +103,20 @@ public class App {
         System.out.println("1) Adding a book you've read");
         System.out.println("2) Adding a book you want to read?");
         System.out.println("Enter the number:");
-        response = scan.nextInt();
-        scan.nextLine();
+        response = getValidInt(scan);
         if (response == 1) {
             System.out.println("Adding a book you've read...");
             System.out.println("What is the name of the book?");
-            String title = scan.nextLine();
+            String title = getValidString(scan);
             System.out.println("What do you rate it? (Counts decimals):");
-            double rating = scan.nextDouble();
+            double rating = getValidDouble(scan);
             Book newBook = new Book(title, rating);
             shelf.addBook(newBook);
             System.out.println("You have added the book " + newBook.toString() + " to your read books!");
         } else {
             System.out.println("Adding a book you want to read...");
             System.out.println("What is the name of the book?");
-            String title = scan.nextLine();
+            String title = getValidString(scan);
             Book newBook = new Book(title);
             shelf.addBook(newBook);
             System.out.println("You have added the book " + newBook.toString() + " to your want to read books!");
@@ -115,10 +131,10 @@ public class App {
     public static void updateBook(Shelf shelf) {
         Scanner scan = new Scanner(System.in);
         System.out.println("Which book do you want to update?");
-        String titleName = scan.nextLine();
+        String titleName = getValidString(scan);
         Book updateBook = shelf.findBook(titleName, 1);
         System.out.println("What are you going to rate this book?");
-        double rating = scan.nextDouble();
+        double rating = getValidDouble(scan);
         scan.nextLine();
         updateBook.setRating(rating);
         shelf.moveBook(updateBook);
@@ -136,10 +152,10 @@ public class App {
         System.out.println("Are you adding a favorite too...");
         System.out.println("0) Adding a read book to favorites");
         System.out.println("1) Adding an unread book to top priority");
-        int response = scan.nextInt();
+        int response = getValidInt(scan);
         scan.nextLine();
         System.out.println("What book do you want to add?");
-        String titleOfBook = scan.nextLine();
+        String titleOfBook = getValidString(scan);
         Book book = shelf.findBook(titleOfBook, response);
         // if there is a null element, add to the first instance of a null.
         if (shelf.nullElementFound(response)) {
@@ -153,11 +169,11 @@ public class App {
             System.out.println("Which do you want to replace?");
             System.out.println("0) Existing Book");
             System.out.println("1) Nevermind");
-            secRes = scan.nextInt();
+            secRes = getValidInt(scan);
             scan.nextLine();
             if (secRes == 0) {
                 System.out.println("Which book do you want to remove?");
-                String titleOfRev = scan.nextLine();
+                String titleOfRev = getValidString(scan);
                 Book bookToRemove = shelf.findBook(titleOfRev, response);
                 index = shelf.returnIndex(bookToRemove, response);
                 shelf.addToFavorites(response, index, book);
@@ -175,4 +191,58 @@ public class App {
         System.out.println("This is your average rating of all books you have read!");
         shelf.printAverages();
     }
+
+    public static int getValidInt(Scanner scan) {
+        int num = -1;
+        boolean valid = false;
+        do {
+            try {
+                System.out.print("Enter a number: ");
+                num = scan.nextInt();
+                scan.nextLine(); // consume newline
+                valid = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scan.nextLine(); // clear bad input
+            }
+        } while (!valid);
+        return num;
+
+    }
+
+    public static double getValidDouble(Scanner scan) {
+        double dob = 0;
+        boolean valid = false;
+        do {
+            try {
+                System.out.print("Enter a number: ");
+                dob = scan.nextDouble();
+                scan.nextLine(); // consume newline
+                valid = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scan.nextLine(); // clear bad input
+            }
+        } while (!valid);
+        return dob;
+
+    }
+
+    public static String getValidString(Scanner scan) {
+        String string = "";
+        boolean valid = false;
+        do {
+            try {
+                System.out.print("Enter a number: ");
+                string = scan.nextLine();
+                valid = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+            }
+        } while (!valid);
+        return string;
+
+    }
+
+
 }
