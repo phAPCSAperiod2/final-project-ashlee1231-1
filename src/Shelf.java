@@ -57,11 +57,12 @@ public class Shelf {
      */
     public int findIndexOfNull(int num) {
         int elseNum = -1;
-        for (int i = num; i < topBooks.length; i++) {
+        for (int i = 0; i < topBooks.length; i++) {
             if (topBooks[num][i] == null) {
                 elseNum = i;
             }
         }
+        System.out.println("The index where there is a null element is " + elseNum);
         return elseNum;
     }
 
@@ -153,10 +154,12 @@ public class Shelf {
     public boolean nullElementFound(int num) {
         for (int i = 0; i < topBooks.length; i++) {
             if (topBooks[num][i] == null) {
-                return false;
+                System.out.println("Found null element at " + i);
+                return true;
             }
         }
-        return true;
+        System.out.println("There are no null elements");
+        return false;
     }
 
     /**
