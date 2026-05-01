@@ -102,7 +102,6 @@ public class App {
         System.out.println("Are you..");
         System.out.println("1) Adding a book you've read");
         System.out.println("2) Adding a book you want to read?");
-        System.out.println("Enter the number:");
         response = getValidInt(scan);
         if (response == 1) {
             System.out.println("Adding a book you've read...");
@@ -110,6 +109,10 @@ public class App {
             String title = getValidString(scan);
             System.out.println("What do you rate it? (Counts decimals):");
             double rating = getValidDouble(scan);
+            while (rating < 0 || rating > 5) {
+                System.out.println("Please enter a value 1-5");
+                rating = getValidDouble(scan);
+            }
             Book newBook = new Book(title, rating);
             shelf.addBook(newBook);
             System.out.println("You have added the book " + newBook.toString() + " to your read books!");
@@ -133,11 +136,20 @@ public class App {
         System.out.println("Which book do you want to update?");
         String titleName = getValidString(scan);
         Book updateBook = shelf.findBook(titleName, 1);
-        System.out.println("What are you going to rate this book?");
-        double rating = getValidDouble(scan);
-        scan.nextLine();
-        updateBook.setRating(rating);
-        shelf.moveBook(updateBook);
+        if (updateBook == null) {
+            System.out.println("Sorry, that book is not in your records.");
+        }
+        else {
+            System.out.println("What are you going to rate this book?");
+            double rating = getValidDouble(scan);
+            scan.nextLine();
+            while (rating < 0 || rating > 5) {
+                System.out.println("Please enter a rating 1-5");
+                rating = getValidDouble(scan);
+            }
+            updateBook.setRating(rating);
+            shelf.moveBook(updateBook);
+        }
 
     }
 
@@ -146,17 +158,21 @@ public class App {
      *
      * @param shelf the shelf containing the book to add to favorites
      */
-    public static void addToFavies(Shelf shelf) {
+    public static boolean addToFavies(Shelf shelf) {
         Scanner scan = new Scanner(System.in);
         int index = -1;
         System.out.println("Are you adding a favorite too...");
         System.out.println("0) Adding a read book to favorites");
         System.out.println("1) Adding an unread book to top priority");
         int response = getValidInt(scan);
-        scan.nextLine();
         System.out.println("What book do you want to add?");
         String titleOfBook = getValidString(scan);
         Book book = shelf.findBook(titleOfBook, response);
+        if (book == null) {
+            System.out.println("Could not locate that book in your records. Try adding the book first?");
+            return false;
+        }
+        else {
         // if there is a null element, add to the first instance of a null.
         if (shelf.nullElementFound(response)) {
             index = shelf.findIndexOfNull(response);
@@ -180,6 +196,8 @@ public class App {
                 System.out.println("Successfully added the book!");
             }
         }
+    }
+        return true;
     }
 
     /**
@@ -215,7 +233,7 @@ public class App {
         boolean valid = false;
         do {
             try {
-                System.out.print("Enter a number: ");
+                System.out.print("Enter a rating (decimals are considered): ");
                 dob = scan.nextDouble();
                 scan.nextLine(); // consume newline
                 valid = true;
@@ -233,7 +251,7 @@ public class App {
         boolean valid = false;
         do {
             try {
-                System.out.print("Enter a number: ");
+                System.out.print("Enter the name: ");
                 string = scan.nextLine();
                 valid = true;
             } catch (InputMismatchException e) {

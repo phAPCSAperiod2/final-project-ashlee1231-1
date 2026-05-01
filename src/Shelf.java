@@ -248,7 +248,7 @@ public class Shelf {
         //loop for want book
         if (num == 1) {
             for (int i = 0; i < wantBooks.size(); i++) {
-                if (wantBooks.get(i).getTitle().equals(title)) {
+                if (wantBooks.get(i).getTitle().equalsIgnoreCase(title)) {
                     return wantBooks.get(i);
                 }
             }
@@ -256,7 +256,7 @@ public class Shelf {
         //loop for read book
         else {
             for (int i = 0; i < readBooks.size(); i++) {
-                if (readBooks.get(i).getTitle().equals(title)) {
+                if (readBooks.get(i).getTitle().equalsIgnoreCase(title)) {
                     return readBooks.get(i);
                 }
             }

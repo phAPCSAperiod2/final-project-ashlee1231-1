@@ -41,7 +41,8 @@ public class Book {
      */
     public boolean setRating(double rating) {
         this.setReadStatus(true);
-        if (rating > 0 && rating <= 5) {
+        if (rating > 0.0 && rating <= 5.0) {
+            System.out.println("If statement runs");
             this.rating = rating;
             return true;
         }
