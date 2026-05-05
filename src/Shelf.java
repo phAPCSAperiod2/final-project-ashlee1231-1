@@ -150,9 +150,8 @@ public class Shelf {
      * @return true if the row contains no null entries, false otherwise
      */
     public boolean nullElementFound(int num) {
-        for (int i = 0; i < topBooks.length; i++) {
+        for (int i = 0; i < topBooks[0].length; i++) {
             if (topBooks[num][i] == null) {
-                System.out.println("Found null element at " + i);
                 return true;
             }
         }
@@ -166,39 +165,46 @@ public class Shelf {
      * @param list the 2D array of books to print
      */
     private static void print2D(Book[][] list) {
-        //check if entire row is empty
-        boolean read = true;
-        boolean want = true;
-        for (int i = 0; i < 2; i++) {
-            if (list[0][i] != null) {
-                break;
+        String readList = "";
+        String wantList = "";
+        boolean noneRead = true;
+        boolean noneWant = true;
+
+        for (int col = 0; col < list[0].length; col++) {
+            if (list[0][col] != null) {
+                if (!readList.isEmpty()) {
+                    readList += ", ";
+                }
+                readList += list[0][col].toString();
+                noneRead = false;
             }
-            read = false;
         }
-        for (int i = 0; i < 2; i++) {
-            if (list[1][i] != null) {
-                break;
+
+        for (int col = 0; col < list[1].length; col++) {
+            if (list[1][col] != null) {
+                if (!wantList.isEmpty()) {
+                    wantList += ", ";
+                }
+                wantList += list[1][col].toString();
+                noneWant = false;
             }
-            want = false;
         }
-        if (!read) {
-                    System.out.println("You have not added any read books to favorites.");
-                }
-        boolean message = false;
-        for (int row = 0; row < list.length; row++) {
-            for (int col = 0; col < list[row].length; col++) {
-                if (!want && !message) {
-                    System.out.println("You have not added any want to read books to favorites");
-                    message = true;
-                }
-                else if (list[row][col] == null) {
-                    System.out.print("");
-                } else {
-                    System.out.println(list[row][col].getTitle());
-                }
-            }
+
+        System.out.println("Favorite Read Books:");
+        if (noneRead) {
+            System.out.println("You have not added any books here.");
+        } else {
+            System.out.println(readList);
+        }
+
+        System.out.println("Top Books You Want to Read:");
+        if (noneWant) {
+            System.out.println("You have not added any books here.");
+        } else {
+            System.out.println(wantList);
         }
     }
+
 
     /**
      * Prints the entire shelf contents, including read books, want-to-read books,

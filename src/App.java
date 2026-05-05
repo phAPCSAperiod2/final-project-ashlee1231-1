@@ -16,6 +16,12 @@ public class App {
      * @throws Exception if an error occurs
      */
     public static void main(String[] args) throws Exception {
+        Book book1 = new Book("A study in drowning", 4);
+        Book book2 = new Book("Blood over bright haven", 4.5);
+        Shelf shelf1 = new Shelf();
+        shelf1.addBook(book1);
+        shelf1.addBook(book2);
+
         int userInput = -1;
         String userContinue = "Yes";
         Shelf shelf = new Shelf();
@@ -103,6 +109,10 @@ public class App {
         System.out.println("1) Adding a book you've read");
         System.out.println("2) Adding a book you want to read?");
         response = getValidInt(scan);
+        while (response < 1 || response > 2) {
+            System.out.println("Please enter a 1 or 2");
+            response = getValidInt(scan);
+        }
         if (response == 1) {
             System.out.println("Adding a book you've read...");
             System.out.println("What is the name of the book?");
@@ -177,6 +187,7 @@ public class App {
         if (shelf.nullElementFound(response)) {
             index = shelf.findIndexOfNull(response);
             shelf.addToFavorites(response, index, book);
+            System.out.println("Added " + book.toString() + " to favorites!");
         }
         // if there are three items, choose one index to replace
         else {
