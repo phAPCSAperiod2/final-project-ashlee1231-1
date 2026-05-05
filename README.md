@@ -21,7 +21,7 @@ This software is designed for book lovers who want to keep track of their readin
 - **Program Logic**: Menu-driven interface with input validation, allowing users to add, update, and display books.
 
 ## Class Diagram
-
+https://drive.google.com/file/d/1j04iqHtp2AbXCo4An7wnjB1WUAlBQ7HE/view?usp=sharing
 
 ```
 App
