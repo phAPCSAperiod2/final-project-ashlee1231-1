@@ -5,7 +5,8 @@ import java.util.ArrayList;
  * books, and a 2D array of favorite books.
  *
  * This class manages a personal book collection with three organizational
- * systems: a list of books already read, a list of books the user wants to read,
+ * systems: a list of books already read, a list of books the user wants to
+ * read,
  * and a 2D favorites array (2 rows by 3 columns). It provides methods to
  * add books, move books between lists, and display the shelf contents in
  * a formatted manner.
@@ -68,7 +69,7 @@ public class Shelf {
      * Finds the column index of a book in the specified favorites row.
      *
      * @param book the book to locate
-     * @param row the favorites row to search
+     * @param row  the favorites row to search
      * @return the column index of the book, or -1 if not found
      */
     public int returnIndex(Book book, int row) {
@@ -108,15 +109,16 @@ public class Shelf {
             oneBook = true;
         }
         if (!oneBook) {
-        for (int i = 0; i < list.size(); i++) {
-            if (i == list.size() - 1) {
-                System.out.println("and " + list.get(i).toString());
-            } else {
-                System.out.print(list.get(i).toString() + ", ");
+            for (int i = 0; i < list.size(); i++) {
+                if (i == list.size() - 1) {
+                    System.out.println("and " + list.get(i).toString());
+                } else {
+                    System.out.print(list.get(i).toString() + ", ");
+                }
             }
         }
     }
-    }
+
     /**
      * Moves a book from the want-to-read list to the read list.
      * Assumes the book is currently in the want-to-read shelf.
@@ -125,8 +127,8 @@ public class Shelf {
      * @param book the book to move from want-to-read to read
      */
     public void moveBook(Book book) {
-            wantBooks.remove(book);
-            readBooks.add(book);
+        wantBooks.remove(book);
+        readBooks.add(book);
     }
 
     /**
@@ -205,7 +207,6 @@ public class Shelf {
         }
     }
 
-
     /**
      * Prints the entire shelf contents, including read books, want-to-read books,
      * and favorite books.
@@ -240,18 +241,18 @@ public class Shelf {
             total += readBooks.get(i).getRating();
             count++;
         }
-        System.out.println("Your average rating is " + total/count + ".");
+        System.out.println("Your average rating is " + total / count + ".");
     }
 
     /**
      * Finds a book by title in either the want-to-read or read list.
      *
      * @param title the title of the book to find
-     * @param num 1 to search want-to-read books, otherwise searches read books
+     * @param num   1 to search want-to-read books, otherwise searches read books
      * @return the matching Book if found, or null if no match exists
      */
     public Book findBook(String title, int num) {
-        //loop for want book
+        // loop for want book
         if (num == 1) {
             for (int i = 0; i < wantBooks.size(); i++) {
                 if (wantBooks.get(i).getTitle().equalsIgnoreCase(title)) {
@@ -259,7 +260,7 @@ public class Shelf {
                 }
             }
         }
-        //loop for read book
+        // loop for read book
         else {
             for (int i = 0; i < readBooks.size(); i++) {
                 if (readBooks.get(i).getTitle().equalsIgnoreCase(title)) {
@@ -270,5 +271,22 @@ public class Shelf {
         return null;
     }
 
-}
+    /**
+     * Removes a book from the read books list.
+     *
+     * @param book the book to remove
+     */
+    public void removeFromReadBooks(Book book) {
+        readBooks.remove(book);
+    }
 
+    /**
+     * Removes a book from the want-to-read books list.
+     *
+     * @param book the book to remove
+     */
+    public void removeFromWantBooks(Book book) {
+        wantBooks.remove(book);
+    }
+
+}

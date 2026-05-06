@@ -1,5 +1,6 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
 /**
  * Main application class that demonstrates the Book and Shelf classes.
  *
@@ -16,11 +17,6 @@ public class App {
      * @throws Exception if an error occurs
      */
     public static void main(String[] args) throws Exception {
-        Book book1 = new Book("A study in drowning", 4);
-        Book book2 = new Book("Blood over bright haven", 4.5);
-        Shelf shelf1 = new Shelf();
-        shelf1.addBook(book1);
-        shelf1.addBook(book2);
 
         int userInput = -1;
         String userContinue = "Yes";
@@ -37,29 +33,25 @@ public class App {
                     userInput = scan.nextInt();
                     scan.nextLine();
                     validInput = true;
-                }
-                catch (InputMismatchException e ) {
-                System.out.println("Invalid input. Please enter a number.");
-                scan.nextLine();
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter a number.");
+                    scan.nextLine();
                 }
             } while (!validInput);
 
-
             goMenu(userInput, shelf);
 
-            //end of method
+            // end of method
             System.out.println("Continue using shelf? Type yes if so!");
             try {
                 userContinue = scan.nextLine();
-            }
-            catch (InputMismatchException f ) {
+            } catch (InputMismatchException f) {
                 System.out.println("Sorry, that is not a valid input. Please type the phrase");
             }
 
         }
         scan.close();
-            }
-
+    }
 
     public static void printMenu() {
         System.out.println("Please choose from the following options...");
@@ -79,20 +71,15 @@ public class App {
     public static void goMenu(int num, Shelf shelf) {
         if (num == 1) {
             shelf.print();
-        }
-        else if (num == 2) {
+        } else if (num == 2) {
             makeBook(shelf);
-        }
-        else if (num == 3) {
+        } else if (num == 3) {
             updateBook(shelf);
-        }
-        else if (num == 4) {
+        } else if (num == 4) {
             addToFavies(shelf);
-        }
-        else if (num == 5) {
+        } else if (num == 5) {
             averages(shelf);
-        }
-        else {
+        } else {
             System.out.println("Not a valid input. Try again");
         }
     }
@@ -148,8 +135,7 @@ public class App {
         Book updateBook = shelf.findBook(titleName, 1);
         if (updateBook == null) {
             System.out.println("Sorry, that book is not in your records.");
-        }
-        else {
+        } else {
             System.out.println("What are you going to rate this book?");
             double rating = getValidDouble(scan);
             scan.nextLine();
@@ -181,33 +167,40 @@ public class App {
         if (book == null) {
             System.out.println("Could not locate that book in your records. Try adding the book first?");
             return false;
-        }
-        else {
-        // if there is a null element, add to the first instance of a null.
-        if (shelf.nullElementFound(response)) {
-            index = shelf.findIndexOfNull(response);
-            shelf.addToFavorites(response, index, book);
-            System.out.println("Added " + book.toString() + " to favorites!");
-        }
-        // if there are three items, choose one index to replace
-        else {
-            int secRes = 0;
-            System.out.println("Uh oh! You already have 3 books in favorites...");
-            System.out.println("Which do you want to replace?");
-            System.out.println("0) Existing Book");
-            System.out.println("1) Nevermind");
-            secRes = getValidInt(scan);
-            scan.nextLine();
-            if (secRes == 0) {
-                System.out.println("Which book do you want to remove?");
-                String titleOfRev = getValidString(scan);
-                Book bookToRemove = shelf.findBook(titleOfRev, response);
-                index = shelf.returnIndex(bookToRemove, response);
+        } else {
+            // if there is a null element, add to the first instance of a null.
+            if (shelf.nullElementFound(response)) {
+                index = shelf.findIndexOfNull(response);
                 shelf.addToFavorites(response, index, book);
-                System.out.println("Successfully added the book!");
+                // Remove the book from read books only if it's a read book
+                if (response == 0) {
+                    shelf.removeFromReadBooks(book);
+                }
+                System.out.println("Added " + book.toString() + " to favorites!");
+            }
+            // if there are three items, choose one index to replace
+            else {
+                int secRes = 0;
+                System.out.println("Uh oh! You already have 3 books in favorites...");
+                System.out.println("Which do you want to replace?");
+                System.out.println("0) Existing Book");
+                System.out.println("1) Nevermind");
+                secRes = getValidInt(scan);
+                scan.nextLine();
+                if (secRes == 0) {
+                    System.out.println("Which book do you want to remove?");
+                    String titleOfRev = getValidString(scan);
+                    Book bookToRemove = shelf.findBook(titleOfRev, response);
+                    index = shelf.returnIndex(bookToRemove, response);
+                    shelf.addToFavorites(response, index, book);
+                    // Remove the new book from read books only if it's a read book
+                    if (response == 0) {
+                        shelf.removeFromReadBooks(book);
+                    }
+                    System.out.println("Successfully added the book!");
+                }
             }
         }
-    }
         return true;
     }
 
@@ -272,6 +265,5 @@ public class App {
         return string;
 
     }
-
 
 }
